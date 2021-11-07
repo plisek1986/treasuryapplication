@@ -19,6 +19,7 @@ from BankingApp import views as all_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', all_views.MainPageView.as_view(), name='main_page')
+    path('', all_views.MainPageView.as_view(), name='main_page'),
+    path('login/', all_views.LoginView.as_view(), name='login'),
 ]
 
