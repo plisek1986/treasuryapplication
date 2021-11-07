@@ -1,8 +1,8 @@
 from django.forms import ModelForm
-from models import User
+from BankingApp.models import User
 
 
-class LoginForm(ModelForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password']
+# class LoginForm(ModelForm):
+#     class Meta:
+#         model = User
+#         fields = ['username', 'password']
