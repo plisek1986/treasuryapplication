@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from BankingApp import views as all_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', all_views.MainPageView.as_view(), name='main_page')
 ]
+
