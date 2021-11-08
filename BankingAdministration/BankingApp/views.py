@@ -20,13 +20,21 @@ class LoginView(View):
     def post(self, request, *args, **kwargs):
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user.is_authenticated:
-            # user will be logged in and saved in the session
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # user will be logged in and his/her ID will be saved in the session
             login(request, user)
-            return HttpResponse(f'Jesteś zalogowany jako {user}')
+            return redirect('dashboard')
         else:
-            return HttpResponse('You are not authorized to loogin!')
+            message = 'Provided credentials are incorrect, please try again'
+            return render(request, 'login.html', context={'message': message})
+
+
+class DashboardView(View):
+    """Logged in user has access to various functionalities of the platform"""
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'dashboard.html')
 
 
 
