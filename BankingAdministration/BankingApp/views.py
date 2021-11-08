@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.views import View
 from BankingApp.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 class MainPageView(View):
@@ -37,4 +37,6 @@ class DashboardView(View):
         return render(request, 'dashboard.html')
 
 
-
+def log_out(request):
+    logout(request)
+    return redirect('main_page')
