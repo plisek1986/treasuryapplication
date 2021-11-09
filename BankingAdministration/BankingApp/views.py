@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, reverse
 from django.views import View
 from BankingApp.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -26,7 +26,7 @@ class LoginView(View):
             login(request, user)
             return redirect('dashboard')
         else:
-            message = 'Provided credentials are incorrect, please try again'
+            message = 'Provided credentials are incorrect, please try again.'
             return render(request, 'login.html', context={'message': message})
 
 
@@ -39,4 +39,6 @@ class DashboardView(View):
 
 def log_out(request):
     logout(request)
+    # Line below returns message to the user with successful log out.
+    request.session['message'] = 'You have been successfully logged out.'
     return redirect('main_page')
