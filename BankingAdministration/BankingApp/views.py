@@ -20,6 +20,7 @@ class LoginView(View):
     def post(self, request, *args, **kwargs):
         username = request.POST['username']
         password = request.POST['password']
+        # authentication based on the credentials provided by the user trying to log in
         user = authenticate(request, username=username, password=password)
         if user is not None:
             # user will be logged in and his/her ID will be saved in the session
