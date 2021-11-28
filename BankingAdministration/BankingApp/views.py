@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse, reverse
 from django.views import View
 from BankingApp.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.views.generic import ListView
 
 
 class MainPageView(View):
@@ -39,7 +40,14 @@ class DashboardView(View):
 
 
 def log_out(request):
+    # in case you would like to display the username who has been logged out (not recommended for security reasons)
+    # logged_in_user = request.user
     logout(request)
     # Line below returns message to the user with successful log out.
-    request.session['message'] = 'You have been successfully logged out.'
+    # request.session['message'] = f'You have been successfully logged out {logged_in_user.username}.'
+    request.session['message'] = f'You have been successfully logged out.'
     return redirect('main_page')
+
+
+class UserListView(ListView):
+    model = User

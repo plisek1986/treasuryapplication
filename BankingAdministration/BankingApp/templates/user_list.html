@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<p><a href="{% url 'dashboard' %}">Go back</a></p>
+<p><a href="{% url 'user-create' %}">New User</a></p>
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>User internal ID</th>
+                    <th>User last login</th>
+                    <th colspan="3">Additional options</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in object_list %}
+                <tr>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.internal_id}}</td>
+                    <td>{{user.last_login}}</td>
+                    <td><a href="/user_view/{{user.id}}/">View</a></td>
+                    <td><a href="/user_edit/{{user.id}}/">Edit</a></td>
+                    <td><a href="/user_delete/{{user.id}}/">Delete</a></td>
+                    {% endfor %}
+                </tbody>
+            </table>
+{% endblock %}
