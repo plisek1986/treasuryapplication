@@ -127,3 +127,5 @@ except ModuleNotFoundError:
 
 
 AUTH_USER_MODEL = 'BankingApp.User'
+
+LOGIN_URL = '/login/'
