@@ -33,8 +33,10 @@ class LoginView(View):
             return render(request, 'login.html', context={'message': message})
 
 
-@login_required(login_url="/login/")
-def dashboard_view(request):
+# login url is provided in the settings as LOGIN_URL, therefore there is no need to provide it as an optional parameter
+# in login_required below
+@login_required
+def dashboard_view(request, *args, **kwargs):
     return render(request, 'dashboard.html')
 
 
@@ -51,3 +53,5 @@ def log_out(request):
 class UserListView(ListView):
     model = User
     template_name = 'user_list.html'
+
+
