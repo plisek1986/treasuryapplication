@@ -4,6 +4,7 @@ from BankingApp.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from BankingApp.forms import UserCreateForm
 
 
 class MainPageView(View):
@@ -55,3 +56,34 @@ class UserListView(ListView):
     template_name = 'user_list.html'
 
 
+class UserCreateView(View):
+    """View lists user creation fields and includes necessary validations."""
+
+    def get(self, request, *args, **kwargs):
+        form = UserCreateForm()
+        return render(request, 'user_create.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        pass
+        # form = UserCreateForm(request.POST)
+        # if form.is_valid():
+        #     name = form.cleaned_data['name']
+        #     surname = form.cleaned_data['surname']
+        #     internal_id = form.cleaned_data['internal_id']
+        #     if len(internal_id) < 7:
+        #         message = 'Provided internal ID is too short'
+        #         return render(request, 'user_create.html', {'form': form, 'message': message})
+        #     elif User.objects.filter(internal_id=internal_id):
+        #         message = 'Provided internal ID already exists in the database'
+        #         return render(request, 'user_create.html', {'form': form, 'message': message})
+        #     is_payment_approver = form.cleaned_data['is_payment_approver']
+        #     is_payment_creator = form.cleaned_data['is_payment_creator']
+        #     is_administrator = form.cleaned_data['is_administrator']
+        #     can_delete_payment = form.cleaned_data['can_delete_payment']
+        #     if is_payment_creator is True and is_payment_approver is True:
+        #         message = 'Violation of segregation of duties. User cannot create and approve payments.'
+        #         return render(request, 'user_create.html', {'form': form, 'message': message})
+        #     User.objects.create(name=name, surname=surname, internal_id=internal_id,
+        #                         is_administrator=is_administrator, is_payment_creator=is_payment_creator,
+        #                         is_payment_approver=is_payment_approver, can_delete_payment=can_delete_payment)
+        return redirect('/users_list/')
