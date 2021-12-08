@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<p><a href="{% url 'dashboard' %}">Go back</a></p>
+<p><a href="{% url 'bank-add' %}">New bank</a></p>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th colspan="3">Additional options</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bank in banks %}
+        <tr>
+            <td>{{bank.name}}</td>
+            <td><a href="{% url 'bank-view' bank_id=bank.id %}">View</a></td>
+            <td><a href="{% url 'bank-edit' bank_id=bank.id %}">Edit</a></td>
+            <td><a href="{% url 'bank-delete' bank_id=bank.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
