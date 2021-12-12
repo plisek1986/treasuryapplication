@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     internal_id = models.CharField(max_length=7, blank=False, null=False, default='ID')
     account = models.ManyToManyField('Account')
-    is_administrator = models.BooleanField(default=False)
+    # is_administrator = models.BooleanField(default=False)
     is_payment_creator = models.BooleanField(default=False)
     is_payment_approver = models.BooleanField(default=False)
     can_delete_payment = models.BooleanField(default=False)

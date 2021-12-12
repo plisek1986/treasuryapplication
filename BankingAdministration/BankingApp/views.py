@@ -64,7 +64,7 @@ class UserCreateView(View):
         return render(request, 'user_create.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
-        pass
+        first_name = request.POST.get('first_name')
         # form = UserCreateForm(request.POST)
         # if form.is_valid():
         #     name = form.cleaned_data['name']

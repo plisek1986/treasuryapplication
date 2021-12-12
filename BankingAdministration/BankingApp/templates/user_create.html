@@ -1,6 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-<p><a href="">Go back</a></p>
-{% include 'default.html' %}
-{{message}}
+<p><a href="{% url 'user_list' %}">Go back</a></p>
+<form action="" method="POST">
+    {% csrf_token %}
+    <label for="first_name">First Name:</label>
+    <input type="text" id="first_name" name="first_name">
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email">
+    <label for="internal_id">Internal ID:</label>
+    <input type="text" id="internal_id" name="internal_id">
+    <label for="administrator">Is administrator:</label>
+    <input type="checkbox" id="administrator" name="administrator" checked="">
+    <label for="payment_creator">Is payment creator:</label>
+    <input type="checkbox" id="payment_creator" name="payment_creator" checked="">
+    <label for="payment_approver">Is payment approver:</label>
+    <input type="checkbox" id="payment_approver" name="payment_approver" checked="">
+    <label for="payment_delete">Can delete payment:</label>
+    <input type="checkbox" id="payment_delete" name="payment_delete" checked="">
+    <label for="payment_creator">Is payment creator:</label>
+    <input type="checkbox" id="payment_creator" name="payment_creator" checked="">
+
+
+
+</form>
+
+
+
+
 {% endblock %}
