@@ -4,29 +4,22 @@
 <form action="" method="POST">
     {% csrf_token %}
     <label for="first_name">First Name:</label>
-    <input type="text" id="first_name" name="first_name">
+    <input type="text" id="first_name" name="first_name"></br>
     <label for="last_name">Last Name:</label>
-    <input type="text" id="last_name" name="last_name">
+    <input type="text" id="last_name" name="last_name"></br>
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email">
-    <label for="internal_id">Internal ID:</label>
-    <input type="text" id="internal_id" name="internal_id">
-    <label for="administrator">Is administrator:</label>
-    <input type="checkbox" id="administrator" name="administrator" checked="">
+    <input type="email" id="email" name="email"></br>
+    <label for="username">Username:</label>
+    <input type="text" id="username" maxlength='7' name="username"></br>
+    <label for="superuser">Is superuser:</label>
+    <input type="checkbox" id="superuser" name="superuser"></br>
     <label for="payment_creator">Is payment creator:</label>
-    <input type="checkbox" id="payment_creator" name="payment_creator" checked="">
+    <input type="checkbox" id="payment_creator" name="payment_creator"></br>
     <label for="payment_approver">Is payment approver:</label>
-    <input type="checkbox" id="payment_approver" name="payment_approver" checked="">
+    <input type="checkbox" id="payment_approver" name="payment_approver"></br>
     <label for="payment_delete">Can delete payment:</label>
-    <input type="checkbox" id="payment_delete" name="payment_delete" checked="">
-    <label for="payment_creator">Is payment creator:</label>
-    <input type="checkbox" id="payment_creator" name="payment_creator" checked="">
-
-
-
+    <input type="checkbox" id="payment_delete" name="payment_delete"></br>
+    <button type="submit">Save the user</button>
 </form>
-
-
-
-
+{{message}}
 {% endblock %}

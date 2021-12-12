@@ -19,10 +19,10 @@ from django.utils.safestring import mark_safe
 
 class UserCreateForm(forms.Form):
     is_superuser = forms.BooleanField()
-    first_name = forms.CharField(max_length=255)
-    last_name = forms.CharField(max_length=255)
+    first_name = forms.CharField(max_length=255, required=True)
+    last_name = forms.CharField(max_length=255, required=True)
     email = forms.EmailInput()
-    internal_id = forms.CharField(max_length=7)
+    internal_id = forms.CharField(max_length=7, required=True)
     is_administrator = forms.BooleanField()
     is_payment_creator = forms.BooleanField()
     is_payment_approver = forms.BooleanField()
