@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from treasuryapplication.BankingAdministration.BankingApp.models import User
+from .models import User
 from django.views.generic import ListView
 from django.views import View
 
@@ -53,7 +53,7 @@ class UserCreateView(View):
         User.objects.create(first_name=first_name, last_name=last_name, email=email, username=username,
                             is_superuser=superuser, is_payment_creator=payment_creator,
                             is_payment_approver=payment_approver, can_delete_payment=delete_payment)
-        return redirect('/user_list/')
+        return redirect('/Users/user_list/')
 
 
 def user_delete(request, user_id, *args, **kwargs):
