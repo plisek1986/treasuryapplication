@@ -56,6 +56,75 @@ class UserCreateView(View):
         return redirect('/Users/user_list/')
 
 
+class UserView(View):
+    """View displays all details of the user including accounts to which user has access."""
+
+    def get(self, request, user_id, *args, **kwargs):
+        user = User.objects.get(pk=user_id)
+        # accounts = user.account.all()
+        ctx = {'first_name': user.first_name,
+               'last_name': user.last_name,
+               'username': user.username,
+               'email': user.email,
+               'is_superuser': user.is_superuser,
+               'is_payment_creator': user.is_payment_creator,
+               'is_payment_approver': user.is_payment_approver,
+               'can_delete_payment': user.can_delete_payment,
+               # 'accounts': accounts,
+               }
+        return render(request, 'user_view.html', ctx)
+
+
+class UserEditView(View):
+    """
+    View where admin can modify details related to the user, including adding or removing accounts
+    and access rights.
+    """
+
+    def get(self, request, user_id, *args, **kwargs):
+
+        user = User.objects.get(pk=user_id)
+        accounts = Account.objects.all()
+        return render(request, 'user_edit.html', {'user': user, 'accounts': accounts})
+
+    def post(self, request, user_id, *args, **kwargs):
+        user = User.objects.get(pk=user_id)
+        surname = request.POST.get('user_surname')
+        is_administrator = request.POST.get('administrator')
+        if is_administrator == "on":
+            is_administrator = True
+        else:
+            is_administrator = False
+        is_payment_creator = request.POST.get('creator')
+        if is_payment_creator == "on":
+            is_payment_creator = True
+        else:
+            is_payment_creator = False
+        is_payment_approver = request.POST.get('approver')
+        if is_payment_approver == "on":
+            is_payment_approver = True
+        else:
+            is_payment_approver = False
+        can_delete_payment = request.POST.get('delete')
+        if can_delete_payment == "on":
+            can_delete_payment = True
+        else:
+            can_delete_payment = False
+        if is_payment_creator is True and is_payment_approver is True:
+            message = 'Violation of segregation of duties. User cannot create and approve payments.'
+            return render(request, 'user_edit.html', {'user': user, 'message': message})
+        user.surname = surname
+        user.is_administrator = is_administrator
+        user.is_payment_creator = is_payment_creator
+        user.is_payment_approver = is_payment_approver
+        user.can_delete_payment = can_delete_payment
+        user.save()
+        return redirect(f'/user_view/{user_id}/')
+
+
+
+
+
 def user_delete(request, user_id, *args, **kwargs):
     """
     Function for deleting user with confirming intention to remove the user.
