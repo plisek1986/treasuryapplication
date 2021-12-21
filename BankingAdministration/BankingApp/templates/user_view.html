@@ -19,15 +19,15 @@ tr:nth-child(even) {
 </style>
 <body>
 <p><a href="/Users/user_list">Go back</a></p>
-    <a href="/Users/user_edit">Edit User</a>
-    <a href="/Users/user_delete">Delete user</a>
+    <a href="/Users/user_edit/{{user.id}}">Edit User</a>
+    <a href="/Users/user_delete/{{user.id}}">Delete user</a>
     <a href="/Users/user-add-accounts">Add accounts</a>
     <p><strong>First name:</strong> {{first_name}}</p>
     <p><strong>Last name:</strong> {{last_name}}</p>
     <p><strong>Email:</strong> {{email}}</p>
     <p><strong>Username:</strong> {{username}}</p>
     <h3><strong>Access:</strong></h3>
-    <label for="can_approve">Payment approver</label>
+    <label for="can_approve">Payment approver:</label>
         <input type="checkbox" name='can_approve' id="can_approve"
                {% if not is_payment_approver %} disabled {% else %} disabled checked {% endif %}>
     <br>
@@ -35,7 +35,7 @@ tr:nth-child(even) {
         <input type="checkbox" name='can_create' id="can_create"
                {% if not is_payment_creator %} disabled {% else %} disabled checked {% endif %}>
     <br>
-    <label for="can_delete">Can delete payment</label>
+    <label for="can_delete">Can delete payment:</label>
         <input type="checkbox" name='can_delete' id="can_delete"
                {% if not can_delete_payment %} disabled {% else %} checked disabled {% endif %}>
     <br>
