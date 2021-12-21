@@ -27,10 +27,6 @@ tr:nth-child(even) {
     <p><strong>Email:</strong> {{email}}</p>
     <p><strong>Username:</strong> {{username}}</p>
     <h3><strong>Access:</strong></h3>
-    <label for="is_superuser">Superuser:</label>
-        <input type="checkbox" name='is_superuser' id="is_superuser"
-               {% if not superuser %} disabled {% else %} disabled checked {% endif %}>
-    <br>
     <label for="can_approve">Payment approver</label>
         <input type="checkbox" name='can_approve' id="can_approve"
                {% if not is_payment_approver %} disabled {% else %} disabled checked {% endif %}>

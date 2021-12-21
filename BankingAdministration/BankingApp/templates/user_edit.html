@@ -15,10 +15,6 @@
     <label for="email">Email:</label>
     <input type="email" name='email' id='email' placeholder='Email' value="{{user.email}}">
     <br>
-    <label for="is_superuser">Superuser:</label>
-        <input type="checkbox" name='is_superuser' id="is_superuser"
-               {% if user.is_superuser %} checked {% endif %}>
-    <br>
     <label for="can_approve">Payment approver</label>
         <input type="checkbox" name='can_approve' id="can_approve"
                {% if user.is_payment_approver %} checked {% endif %}>
