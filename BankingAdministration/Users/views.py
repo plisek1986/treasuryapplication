@@ -84,14 +84,15 @@ class UserEditView(View):
     def get(self, request, user_id, *args, **kwargs):
 
         user = User.objects.get(pk=user_id)
-        accounts = Account.objects.all()
-        return render(request, 'user_edit.html', {'user': user, 'accounts': accounts})
+        # accounts = Account.objects.all()
+        return render(request, 'user_edit.html', {'user': user})
+                                                    # 'accounts': accounts --> to też ma pójść do ctx
 
     def post(self, request, user_id, *args, **kwargs):
         user = User.objects.get(pk=user_id)
-        surname = request.POST.get('user_surname')
-        is_administrator = request.POST.get('administrator')
-        if is_administrator == "on":
+        last_name = request.POST.get('user_surname')
+        is_superuser = request.POST.get('administrator')
+        if is_superuser == "on":
             is_administrator = True
         else:
             is_administrator = False
@@ -120,9 +121,6 @@ class UserEditView(View):
         user.can_delete_payment = can_delete_payment
         user.save()
         return redirect(f'/user_view/{user_id}/')
-
-
-
 
 
 def user_delete(request, user_id, *args, **kwargs):

@@ -18,13 +18,14 @@ tr:nth-child(even) {
 }
 </style>
 <body>
-<p><a href="/Users/user-list">Go back</a></p>
-    <a href="/Users/user-edit">Edit User</a>
-    <a href="/Users/user-delete">Delete user</a>
+<p><a href="/Users/user_list">Go back</a></p>
+    <a href="/Users/user_edit">Edit User</a>
+    <a href="/Users/user_delete">Delete user</a>
     <a href="/Users/user-add-accounts">Add accounts</a>
     <p><strong>First name:</strong> {{first_name}}</p>
     <p><strong>Last name:</strong> {{last_name}}</p>
-    <p><strong>Username:</strong>{{username}}</p>
+    <p><strong>Email:</strong> {{email}}</p>
+    <p><strong>Username:</strong> {{username}}</p>
     <h3><strong>Access:</strong></h3>
     <label for="is_superuser">Superuser:</label>
         <input type="checkbox" name='is_superuser' id="is_superuser"
@@ -54,17 +55,17 @@ tr:nth-child(even) {
                 <th>Additional options</th>
             </tr>
         </thead>
-<!--        <tbody>-->
-<!--            {% for account in accounts %}-->
-<!--            <tr>-->
-<!--                <td>{{account.company}}</td>-->
-<!--                <td>{{account.bank}}</td>-->
-<!--                <td>{{account.iban_number}}</td>-->
-<!--                <td>{{account.swift_code}}</td>-->
-<!--                <td><a href="{% url 'user-remove-accounts' user_id=user_id account_id=account.id%}">Remove</a></td>-->
-<!--            </tr>-->
-<!--            {% endfor %}-->
-<!--        </tbody>-->
+        <tbody>
+            {% for account in accounts %}
+            <tr>
+                <td>{{account.company}}</td>
+                <td>{{account.bank}}</td>
+                <td>{{account.iban_number}}</td>
+                <td>{{account.swift_code}}</td>
+                <td><a href="{% url 'user-remove-accounts' user_id=user_id account_id=account.id%}">Remove</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </body>
 {% endblock %}
