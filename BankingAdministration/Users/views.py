@@ -121,5 +121,5 @@ def user_delete(request, user_id, *args, **kwargs):
     user = User.objects.get(pk=user_id)
     if request.method == 'POST':
         user.delete()
-        return redirect('user-list')
+        return redirect('/Users/user_list')
     return render(request, 'user_delete.html', {'user': user})
