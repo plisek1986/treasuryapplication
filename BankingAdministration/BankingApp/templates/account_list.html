@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <p><a href="{% url 'dashboard' %}">Go back</a></p>
-<a href="{% url 'account-create' %}">Create account</a>
+<a href="/Accounts/account_create">Create account</a>
 <table>
     <thead>
         <tr>
@@ -21,8 +21,8 @@
             <td>{{account.bank}}</td>
             <td>{{account.iban_number}}</td>
             <td>{{account.swift_code}}</td>
-            <td><a href="{% url 'account-edit' account_id=account.id %}">Edit</a></td>
-            <td><a href="{% url 'account-delete' account_id=account.id %}">Delete</a></td>
+            <td><a href="/Accounts/account_edit/{{account.id}}">Edit</a></td>
+            <td><a href="/Accounts/account_delete/{{account.id}}">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>

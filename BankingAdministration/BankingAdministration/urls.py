@@ -9,5 +9,6 @@ urlpatterns = [
     path('dashboard/', dashboard_view, name='dashboard'),
     path('log_out/', log_out, name='log_out'),
     path('Users/', include('Users.urls', namespace='Users')),
+    path('Accounts/', include('Accounts.urls', namespace='Accounts')),
 ]
 
