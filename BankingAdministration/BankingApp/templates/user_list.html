@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <p><a href="{% url 'dashboard' %}">Go back</a></p>
-<p><a href="{% url 'user_create' %}">New User</a></p>
+<p><a href="/Users/user_create">New User</a></p>
             <table>
                 <thead>
                 <tr>
@@ -21,9 +21,9 @@
                     <td>{{user.username}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.last_login}}</td>
-                    <td><a href="/user_view/{{user.id}}/">View</a></td>
-                    <td><a href="/user_edit/{{user.id}}/">Edit</a></td>
-                    <td><a href="/user_delete/{{user.id}}/">Delete</a></td>
+                    <td><a href="/Users/user_view/{{user.id}}">View</a></td>
+                    <td><a href="/Users/user_edit/{{user.id}}">Edit</a></td>
+                    <td><a href="/Users/user_delete/{{user.id}}">Delete</a></td>
                     {% endfor %}
                 </tbody>
             </table>

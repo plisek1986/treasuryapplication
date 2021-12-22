@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'BankingApp',
+    'Users',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,6 @@ except ModuleNotFoundError:
     exit(0)
 
 
-AUTH_USER_MODEL = 'BankingApp.User'
+AUTH_USER_MODEL = 'Users.User'
 
 LOGIN_URL = '/login/'

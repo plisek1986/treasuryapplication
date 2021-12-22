@@ -1,49 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 70%;
-}
+<!--<style>-->
+<!--table {-->
+<!--  font-family: arial, sans-serif;-->
+<!--  border-collapse: collapse;-->
+<!--  width: 70%;-->
+<!--}-->
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
+<!--td, th {-->
+<!--  border: 1px solid #dddddd;-->
+<!--  text-align: left;-->
+<!--  padding: 8px;-->
+<!--}-->
 
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-</style>
+<!--tr:nth-child(even) {-->
+<!--  background-color: #dddddd;-->
+<!--}-->
+<!--</style>-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <body>
-<p><a href="{% url 'users-list' %}">Go back</a></p>
-    <a href="{% url 'user-edit' user_id=user_id %}">Edit User</a>
-    <a href="{% url 'user-view-delete' user_id=user_id %}">Delete user</a>
-    <a href="{% url 'user-add-accounts' user_id=user_id %}">Add accounts</a>
-    <p><strong>User name:</strong> {{name}}</p>
-    <p><strong>User Surname:</strong> {{surname}}</p>
-    <p><strong>Internal ID:</strong>{{internal_id}}</p>
+<p><a href="/Users/user_list">Go back</a></p>
+    <a href="/Users/user_edit/{{user.id}}">Edit User</a>
+    <a href="/Users/user_delete/{{user.id}}">Delete user</a>
+    <a href="/Users/user-add-accounts">Add accounts</a>
+    <p><strong>First name:</strong> {{first_name}}</p>
+    <p><strong>Last name:</strong> {{last_name}}</p>
+    <p><strong>Email:</strong> {{email}}</p>
+    <p><strong>Username:</strong> {{username}}</p>
     <h3><strong>Access:</strong></h3>
-    <label for="administrator">Administrator:</label>
-        <input type="checkbox" name='administrator' id="administrator"
-               {% if not is_administrator %} disabled {% else %} disabled checked {% endif %}>
-    <br>
-    <label for="approver">Payment approver</label>
-        <input type="checkbox" name='approver' id="approver"
+    <div class="table">
+    <label for="can_approve">Payment approver:</label>
+        <input type="checkbox" name='can_approve' id="can_approve"
                {% if not is_payment_approver %} disabled {% else %} disabled checked {% endif %}>
     <br>
-    <label for="creator">Payment creator:</label>
-        <input type="checkbox" name='administrator' id="creator"
+    <label for="can_create">Payment creator:</label>
+        <input type="checkbox" name='can_create' id="can_create"
                {% if not is_payment_creator %} disabled {% else %} disabled checked {% endif %}>
     <br>
-    <label for="delete">Can delete payment</label>
-        <input type="checkbox" name='delete' id="delete"
+    <label for="can_delete">Can delete payment:</label>
+        <input type="checkbox" name='can_delete' id="can_delete"
                {% if not can_delete_payment %} disabled {% else %} checked disabled {% endif %}>
+    </div>
     <br>
-    <h3>Accounts</h3>
-
+    <h3><strong>Accounts:</strong></h3>
+    <div class="table">
     <table>
         <thead>
             <tr>
@@ -66,5 +66,8 @@ tr:nth-child(even) {
             {% endfor %}
         </tbody>
     </table>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>
 {% endblock %}

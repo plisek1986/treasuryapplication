@@ -1,31 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
-<p><a href="{% url 'users-list' %}">Go back</a></p>
+<p><a href="/Users/user_list">Go back</a></p>
 <form action="" method="POST">
     {% csrf_token %}
-    <label for="user_name">User name:</label>
-        <input type="text" name='user_name' id='user_name' placeholder="User name" value="{{user.name}}" disabled>
+    <label for="first_name">First name:</label>
+        <input type="text" name='first_name' id='first_name' placeholder="First name" value="{{user.first_name}}" disabled>
     <br>
-    <label for="user_surname">User surname:</label>
-        <input type="text" name='user_surname' id='user_surname' placeholder="User surname" value="{{user.surname}}">
+    <label for="last_name">Last name:</label>
+        <input type="text" name='last_name' id='last_name' placeholder="Last name" value="{{user.last_name}}">
     <br>
-    <label for="internal_id">Internal ID:</label>
-        <input type="text" name='internal_id' id='internal_id' value="{{user.internal_id}}" disabled>
+    <label for="username">Username:</label>
+        <input type="text" name='username' id='username' value="{{user.username}}" disabled>
     <br>
-    <label for="administrator">Administrator</label>
-        <input type="checkbox" name='administrator' id="administrator"
-               {% if user.is_administrator %} checked {% endif %}>
+    <label for="email">Email:</label>
+    <input type="email" name='email' id='email' placeholder='Email' value="{{user.email}}">
     <br>
-    <label for="approver">Payment approver</label>
-        <input type="checkbox" name='approver' id="approver"
+    <label for="can_approve">Payment approver</label>
+        <input type="checkbox" name='can_approve' id="can_approve"
                {% if user.is_payment_approver %} checked {% endif %}>
     <br>
-    <label for="creator">Payment creator</label>
-        <input type="checkbox" name='creator' id="creator"
+    <label for="can_create">Payment creator</label>
+        <input type="checkbox" name='can_create' id="can_create"
                {% if user.is_payment_creator %} checked {% endif %}>
     <br>
-    <label for="delete">Can delete payment</label>
-        <input type="checkbox" name='delete' id="delete"
+    <label for="can_delete">Can delete payment</label>
+        <input type="checkbox" name='can_delete' id="can_delete"
                {% if user.can_delete_payment %} checked {% endif %}>
     <br>
     {{message}}<br>
