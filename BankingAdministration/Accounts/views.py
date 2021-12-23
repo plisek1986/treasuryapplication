@@ -143,11 +143,11 @@ def account_delete(request, account_id, *args, **kwargs):
     :return: administrator is redirected to the account list view
     """
 
-    admin = request.session.get('admin_id')
-    if admin is None:
-        return HttpResponse('You are not authorized')
-    else:
-        pass
+    # admin = request.session.get('admin_id')
+    # if admin is None:
+    #     return HttpResponse('You are not authorized')
+    # else:
+    #     pass
     account = Account.objects.get(pk=account_id)
     if request.method == 'POST':
         account.delete()
