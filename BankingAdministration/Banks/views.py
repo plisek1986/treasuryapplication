@@ -1,16 +1,9 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, UpdateView
 from .models import Bank
 from .forms import BankCreateForm
-
-
-# class BankListView(View):
-#     """View for enlisting all banks available in the database."""
-#
-#     def get(self, request, *args, **kwargs):
-#         banks = Bank.objects.all().order_by('name')
-#         return render(request, 'bank_list.html', {'banks': banks})
+from django.urls import reverse_lazy
 
 
 class BankListView(ListView):
@@ -45,22 +38,33 @@ class BankCreateView(View):
             return redirect('/Banks/bank_list')
 
 
-class BankEditView(View):
+class BankUpdateView(UpdateView):
     """View for editing bank's details. Validation of the existence of the bank in the database takes place. """
 
-    def get(self, request, bank_id, *args, **kwargs):
-        bank = Bank.objects.get(pk=bank_id)
-        return render(request, 'bank_edit.html', {'bank': bank})
+    model = Bank
+    fields = ['name']
+    template_name_suffix = '_update_form'
 
-    def post(self, request, bank_id, *args, **kwargs):
-        bank = Bank.objects.get(pk=bank_id)
-        name = request.POST.get('name')
-        if Bank.objects.filter(name=name) and name != bank.name:
-            message = 'Bank with this name already exists in the database.'
-            return render(request, 'bank_edit.html', {'bank': bank, 'message': message})
-        bank.name = name
-        bank.save()
-        return redirect('/Banks/bank_list')
+    # def redirect(self):
+    #     return redirect('/Banks/bank_list')
+
+    # def reverse(self, url='/Banks/bank_list'):
+    #     return redirect(url)
+
+        #
+    # def get(self, request, nk_id, *args, **kwargs):
+    #     bank = Bank.objects.get(pk=bank_id)
+    #     return render(request, 'bank_update_form.html', {'bank': bank})
+    #
+    # def post(self, request, bank_id, *args, **kwargs):
+    #     bank = Bank.objects.get(pk=bank_id)
+    #     name = request.POST.get('name')
+    #     if Bank.objects.filter(name=name) and name != bank.name:
+    #         message = 'Bank with this name already exists in the database.'
+    #         return render(request, 'bank_update_form.html', {'bank': bank, 'message': message})
+    #     bank.name = name
+    #     bank.save()
+    #     return redirect('/Banks/bank_list')
 
 
 def bank_delete(request, bank_id, *args, **kwargs):
@@ -81,7 +85,7 @@ def bank_delete(request, bank_id, *args, **kwargs):
 class BankViewView(View):
     """View for displaying all details of a bank, incl. it's accounts."""
 
-    def get(self, request, bank_id, *args, **kwargs):
+    def get(self, request, bank_id):
         bank = Bank.objects.get(pk=bank_id)
         accounts = bank.account_set.all()
         return render(request, 'bank_view.html', {'bank': bank, 'accounts': accounts})

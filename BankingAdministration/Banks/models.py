@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 
 
 class Bank(models.Model):
@@ -13,3 +14,7 @@ class Bank(models.Model):
         """
 
         return self.name
+
+    @staticmethod
+    def get_absolute_url():
+        return reverse('Banks:bank-list', kwargs=None)

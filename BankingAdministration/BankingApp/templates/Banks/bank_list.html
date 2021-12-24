@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <p><a href="{% url 'dashboard' %}">Go back</a></p>
-<p><a href="/Banks/bank_create">New bank</a></p>
+<p><a href="{% url 'Banks:bank-create' %}">New bank</a></p>
 <table>
     <thead>
         <tr>
@@ -13,9 +13,9 @@
         {% for bank in object_list %}
         <tr>
             <td>{{bank.name}}</td>
-<!--            <td><a href="{% url 'bank-view' bank_id=bank.id %}">View</a></td>-->
-<!--            <td><a href="{% url 'bank-edit' bank_id=bank.id %}">Edit</a></td>-->
-<!--            <td><a href="{% url 'bank-delete' bank_id=bank.id %}">Delete</a></td>-->
+            <td><a href="{% url 'Banks:bank-view' %}">View</a></td>
+            <td><a href="{% url 'Banks:bank-edit' bank.id %}">Edit</a></td>
+            <td><a href="/Banks/bank_delete/{{bank.id}}">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>

@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-<p><a href="{% url 'banks-list' %}">Go back</a></p>
+<p><a href="/Banks/bank_list">Go back</a></p>
 <form action="" method="POST">
     {% csrf_token %}
-    <label for="name">Name:</label>
-        <input type="text" name='name' id='name' value='{{bank.name}}'>
-    <br>
+    {{ form.as_p }}
     {{message}}<br>
     <button type="submit">Save</button>
 </form>
