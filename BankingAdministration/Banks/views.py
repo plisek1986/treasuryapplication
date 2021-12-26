@@ -1,8 +1,11 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import ListView, UpdateView
+from django.views.generic.edit import UpdateView
 from .models import Bank
-from .forms import BankCreateForm
+from django.http import HttpRequest, HttpResponse, Http404
+from .forms import BankCreateForm, BankUpdateForm
 from django.urls import reverse_lazy
 
 
@@ -23,19 +26,19 @@ class BankCreateView(View):
     Additional validation for existence of a new bank in the database takes place.
     """
 
-    def get(self, request, *args, **kwargs):
-        form = BankCreateForm()
-        return render(request, 'bank_create.html', {'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = BankCreateForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            if Bank.objects.filter(name=name):
-                message = 'This bank already exists in database.'
-                return render(request, 'bank_create.html', {'form': form, 'message': message})
-            Bank.objects.create(name=name)
-            return redirect('/Banks/bank_list')
+    # def get(self, request, *args, **kwargs):
+    #     form = BankCreateForm()
+    #     return render(request, 'bank_create.html', {'form': form})
+    #
+    # def post(self, request, *args, **kwargs):
+    #     form = BankCreateForm(request.POST)
+    #     if form.is_valid():
+    #         name = form.cleaned_data['name']
+    #         if Bank.objects.filter(name=name):
+    #             message = 'This bank already exists in database.'
+    #             return render(request, 'bank_create.html', {'form': form, 'message': message})
+    #         Bank.objects.create(name=name)
+    #         return redirect('/Banks/bank_list')
 
 
 class BankUpdateView(UpdateView):
@@ -44,27 +47,6 @@ class BankUpdateView(UpdateView):
     model = Bank
     fields = ['name']
     template_name_suffix = '_update_form'
-
-    # def redirect(self):
-    #     return redirect('/Banks/bank_list')
-
-    # def reverse(self, url='/Banks/bank_list'):
-    #     return redirect(url)
-
-        #
-    # def get(self, request, nk_id, *args, **kwargs):
-    #     bank = Bank.objects.get(pk=bank_id)
-    #     return render(request, 'bank_update_form.html', {'bank': bank})
-    #
-    # def post(self, request, bank_id, *args, **kwargs):
-    #     bank = Bank.objects.get(pk=bank_id)
-    #     name = request.POST.get('name')
-    #     if Bank.objects.filter(name=name) and name != bank.name:
-    #         message = 'Bank with this name already exists in the database.'
-    #         return render(request, 'bank_update_form.html', {'bank': bank, 'message': message})
-    #     bank.name = name
-    #     bank.save()
-    #     return redirect('/Banks/bank_list')
 
 
 def bank_delete(request, bank_id, *args, **kwargs):

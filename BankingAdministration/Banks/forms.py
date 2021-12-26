@@ -6,3 +6,9 @@ class BankCreateForm(ModelForm):
     class Meta:
         model = Bank
         fields = ['name']
+
+
+class BankUpdateForm(ModelForm):
+    class Meta:
+        model = Bank
+        fields = ['name']
