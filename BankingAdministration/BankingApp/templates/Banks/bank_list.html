@@ -13,9 +13,9 @@
         {% for bank in object_list %}
         <tr>
             <td>{{bank.name}}</td>
-            <td><a href="{% url 'Banks:bank-view' %}">View</a></td>
-            <td><a href="{% url 'Banks:bank-edit' bank.id %}">Edit</a></td>
-            <td><a href="/Banks/bank_delete/{{bank.id}}">Delete</a></td>
+            <td><a href="{% url 'Banks:bank-detail' bank.pk %}">View</a></td>
+            <td><a href="{% url 'Banks:bank-edit' bank.pk %}">Edit</a></td>
+            <td><a href="{% url 'Banks:bank-delete' bank.pk %}">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>

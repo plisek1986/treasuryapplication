@@ -4,11 +4,6 @@
 <form action="" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    {{ message }}
-<!--    {% if messages %}-->
-<!--            {% if message.tags %} {% endif %} {{ message }}-->
-<!--    {% endif %}-->
-    <br>
     <button type="submit">Save</button>
 </form>
 {% endblock %}

@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-<p><a href="/Banks/bank_list">Go back</a></p>
+<p><a href="{% url 'Banks:bank-list' %}">Go back</a></p>
 <form action="" method="POST">
     {% csrf_token %}
-    {{form}}
-    {{message}}
+    {{ form.as_p }}
     <button type="submit">Save</button>
 </form>
 {% endblock %}

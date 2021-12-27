@@ -5,9 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-    <p><a href="{% url 'banks-list' %}">Go back</a></p>
-    <a href="{% url 'bank-edit' bank_id=bank.id %}">Edit</a>
-    <a href="{% url 'bank-view-delete' bank_id=bank.id %}">Delete</a>
+    <p><a href="{% url 'Banks:banks-list' %}">Go back</a></p>
+    <a href="{% url 'Banks:bank-edit' pk=bank.id %}">Edit</a>
+    <a href="{% url 'Banks:bank-view-delete' pk=bank.id %}">Delete</a>
     <p>Bank name: {{bank.name}}</p>
     <h2>Accounts:</h2>
     <table>
