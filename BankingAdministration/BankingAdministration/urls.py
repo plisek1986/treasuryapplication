@@ -10,5 +10,6 @@ urlpatterns = [
     path('log_out/', log_out, name='log_out'),
     path('Users/', include('Users.urls', namespace='Users')),
     path('Accounts/', include('Accounts.urls', namespace='Accounts')),
+    path('Banks/', include('Banks.urls', namespace='Banks')),
 ]
 
