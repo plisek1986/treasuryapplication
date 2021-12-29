@@ -13,7 +13,6 @@ class BankListView(LoginRequiredMixin, ListView):
     """View for enlisting all banks available in the database."""
 
     model = Bank
-    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,6 +27,7 @@ class BankCreateView(CreateView):
 
     model = Bank
     fields = ['name']
+    template_name_suffix = '_create_form'
 
 
 class BankUpdateView(UpdateView):

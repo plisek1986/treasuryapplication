@@ -2,7 +2,7 @@
 {% block content %}
 <body>
     <p><a href="{% url 'Banks:bank-list' %}">Go back</a></p>
-    <p>Bank name: {{ bank.name }}</p>
+    <p>Bank name: {{ object.name }}</p>
     <h2>Accounts:</h2>
     <table>
         <thead>

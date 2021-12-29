@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <h3>Are you sure you want to delete company {{ object }}?</h3>
+    {{ form }}
+    <button type="submit">Yes</button><a href="{% url 'Companies:company-list' %}">Cancel</a>
+</form>
+{% endblock %}

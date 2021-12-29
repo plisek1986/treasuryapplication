@@ -11,5 +11,6 @@ urlpatterns = [
     path('Users/', include('Users.urls', namespace='Users')),
     path('Accounts/', include('Accounts.urls', namespace='Accounts')),
     path('Banks/', include('Banks.urls', namespace='Banks')),
+    path('Companies/', include('Companies.urls', namespace='Companies')),
 ]
 
