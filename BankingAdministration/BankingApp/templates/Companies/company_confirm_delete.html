@@ -3,7 +3,6 @@
 <form action="" method="POST">
     {% csrf_token %}
     <h3>Are you sure you want to delete company {{ object }}?</h3>
-    {{ form }}
-    <button type="submit">Yes</button><a href="{% url 'Companies:company-list' %}">Cancel</a>
+    <button type="submit">Yes</button><a href="/Companies/company_list">Cancel</a>
 </form>
 {% endblock %}

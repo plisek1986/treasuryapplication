@@ -10,11 +10,6 @@ class CompanyListView(LoginRequiredMixin, ListView):
     """View for enlisting all banks available in the database."""
 
     model = Company
-    paginate_by = 10
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
 class CompanyCreateView(CreateView):
@@ -37,8 +32,9 @@ class CompanyUpdateView(UpdateView):
 
 
 class CompanyDeleteView(DeleteView):
+
     model = Company
-    success_url = reverse_lazy('Banks:bank-list')
+    success_url = reverse_lazy('Companies:company-list')
 
 
 class CompanyDetailView(DetailView):
