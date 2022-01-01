@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<p><a href="{% url 'Companies:company-list' %}">Go back</a></p>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
+    <p><a href="{% url 'Companies:company-list' %}">Go back</a></p>
+    <p><strong>Company name:</strong> {{ object.name }}</p>
+    <p><strong>Company country:</strong> {{ object.country }}</p>
 {% endblock %}
