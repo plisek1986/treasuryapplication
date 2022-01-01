@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Account, Company, Bank, COUNTRY_CHOICE
-from django.http import HttpResponse
+from django.views.generic.list import ListView
+from django.views.generic.edit import DeleteView, UpdateView
+from .models import Account
+from Companies.models import Company, COUNTRY_CHOICE
+from Banks.models import Bank
 
 IBAN_COUNTRY_CODE_LENGTH = {
     'AT': 20,  # Austria
@@ -40,13 +43,10 @@ IBAN_COUNTRY_CODE_LENGTH = {
 special_characters = '!@#$%^&*()_+-={}[]|:";<>?,./"'
 
 
-class AccountListView(View):
+class AccountListView(ListView):
     """View for enlisting all accounts in the database."""
 
-    def get(self, request, *args, **kwargs):
-        accounts = Account.objects.all().order_by('-company')
-        companies = Company.objects.all()
-        return render(request, 'account_list.html', {'accounts': accounts, 'companies': companies})
+    model = Account
 
 
 class AccountCreateView(View):
@@ -58,6 +58,7 @@ class AccountCreateView(View):
     def get(self, request, *args, **kwargs):
         banks = Bank.objects.all()
         companies = Company.objects.all()
+        print(companies)
         country_codes = []
         for country in COUNTRY_CHOICE:
             country_codes.append(country[1])
@@ -67,6 +68,12 @@ class AccountCreateView(View):
     def post(self, request, *args, **kwargs):
         banks = Bank.objects.all()
         companies = Company.objects.all()
+        if len(banks) == 0:
+            message = 'Create Bank first and then add account.'
+            return render(request, 'account_create.html', context={'message': message})
+        elif len(companies) == 0:
+            message = 'Create Company first and then add account.'
+            return render(request, 'account_create.html', context={'message': message})
         country_codes = []
         for country in COUNTRY_CHOICE:
             country_codes.append(country[1])

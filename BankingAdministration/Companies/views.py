@@ -4,6 +4,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.views.generic.detail import DetailView
 from .models import Company
+from Accounts.models import Account
 
 
 class CompanyListView(LoginRequiredMixin, ListView):
@@ -32,7 +33,6 @@ class CompanyUpdateView(UpdateView):
 
 
 class CompanyDeleteView(DeleteView):
-
     model = Company
     success_url = reverse_lazy('Companies:company-list')
 
@@ -41,3 +41,8 @@ class CompanyDetailView(DetailView):
     """View for displaying all details of a bank, incl. it's accounts."""
 
     model = Company
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['accounts'] = Account.objects.filter(company=self.object).order_by('-bank')
+        return context

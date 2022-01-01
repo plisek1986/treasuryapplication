@@ -14,15 +14,15 @@
         </tr>
     </thead>
     <tbody>
-        {% for account in accounts %}
+        {% for account in object_list %}
         <tr>
             <td>{{account.company}}</td>
             <td>{{account.company.country}}</td>
             <td>{{account.bank}}</td>
             <td>{{account.iban_number}}</td>
             <td>{{account.swift_code}}</td>
-            <td><a href="/Accounts/account_edit/{{account.id}}">Edit</a></td>
-            <td><a href="/Accounts/account_delete/{{account.id}}">Delete</a></td>
+            <td><a href="{% url 'Accounts:account-edit' account.pk %}">Edit</a></td>
+            <td><a href="{% url 'Accounts:account-delete' account.pk %}">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>
