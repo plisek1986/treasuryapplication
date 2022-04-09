@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <p><a href="{% url 'dashboard' %}">Go back</a></p>
-<p><a href="{% url 'company-create' %}">New Company</a></p>
+<p><a href="{% url 'Companies:company-create' %}">New Company</a></p>
 <table>
     <thead>
         <tr>
@@ -11,13 +11,13 @@
         </tr>
     </thead>
     <tbody>
-    {% for company in companies %}
+    {% for company in object_list %}
         <tr>
             <td>{{company.name}}</td>
             <td>{{company.country}}</td>
-            <td><a href="/company_view/{{company.id}}/">View</a></td>
-            <td><a href="{% url 'company-edit' company_id=company.id %}">Edit</a></td>
-            <td><a href="{% url 'company-delete' company_id=company.id %}">Delete</a></td>
+            <td><a href="{% url 'Companies:company-detail' pk=company.pk %}">View</a></td>
+            <td><a href="{% url 'Companies:company-edit' pk=company.pk %}">Edit</a></td>
+            <td><a href="{% url 'Companies:company-delete' pk=company.pk %}">Delete</a></td>
         </tr>
     {% endfor %}
     </tbody>

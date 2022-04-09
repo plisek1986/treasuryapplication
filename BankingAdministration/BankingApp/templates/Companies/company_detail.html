@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p><a href="{% url 'Companies:company-list' %}">Go back</a></p>
+    <p><strong>Company name:</strong> {{ object.name }}</p>
+    <p><strong>Company country:</strong> {{ object.country }}</p>
+    <h1><strong>Accounts:</strong></h1>
+    <table>
+        <tr>
+            <th>Iban number</th>
+            <th>Swift code</th>
+            <th>Bank</th>
+        </tr>
+        <tr>
+        {% for account in accounts %}
+            <td>{{ account.bank }}</td>
+            <td>{{ account.iban_number }}</td>
+            <td>{{ account.swift_code }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

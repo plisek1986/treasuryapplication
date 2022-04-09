@@ -2,7 +2,7 @@
 {% block content %}
     <ul class="menu">
         <li><a href="{% url 'Users:user-list' %}">Users</a></li>
-        <li><a href="">Companies</a></li>
+        <li><a href="{% url 'Companies:company-list' %}">Companies</a></li>
         <li><a href="{% url 'Accounts:account-list' %}">Accounts</a></li>
         <li><a href="{% url 'Banks:bank-list' %}">Banks</a></li>
         <li><a href="">Access types</a></li>
