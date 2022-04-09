@@ -43,5 +43,5 @@ def log_out(request):
     logged_in_user = request.user
     logout(request)
     # Line below returns message to the user with successful log out.
-    request.session['message'] = f'You have been successfully logged out {logged_in_user}.'
+    # request.session['message'] = f'You have been successfully logged out.'
     return redirect('main_page')

@@ -1,26 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-<p><a href="{% url 'user-view' user_id=user.id %}">Go back</a></p>
+<p><a href="{% url 'Users:user-view' user_id=user.id %}">Go back</a></p>
 <form action="" method="POST">
     {% csrf_token %}
-<table>
+<p>Username: {username}</p>
+    <table>
   <thead>
     <tr>
         <th>Company</th>
         <th>Bank</th>
         <th>Iban number</th>
         <th>Swift</th>
-        <th>Add</th>
+        <th>Creator</th>
+        <th>Approver</th>
+        <th>Can delete</th>
     </tr>
   </thead>
     <tbody>
-            {% for account in available_accounts %}
+            {% for account in accounts %}
         <tr>
             <td>{{account.company}}</td>
             <td>{{account.bank}}</td>
             <td>{{account.iban_number}}</td>
             <td>{{account.swift_code}}</td>
-            <td><input type="checkbox" name="accounts" value="{{account.iban_number}}"/></td>
+            <td><input type="checkbox" name="can_create" {% if user.is_payment_creator %} checked {% endif %}></td>
+            <td><input type="checkbox" name="can_approve" {% if user.is_payment_approver %} checked {% endif %}></td>
+            <td><input type="checkbox" name="can_delete" {% if user.can_delete_payment %} checked {% endif %}></td>
+
+
         </tr>
             {% endfor %}
     </tbody>
