@@ -3,7 +3,8 @@
 <p><a href="{% url 'Users:user-view' user_id=user.id %}">Go back</a></p>
 <form action="" method="POST">
     {% csrf_token %}
-<p>Username: {username}</p>
+<p>{{ message }}</p>
+<p>Username: {{ user.username }}</p>
     <table>
   <thead>
     <tr>
@@ -17,7 +18,7 @@
     </tr>
   </thead>
     <tbody>
-            {% for account in accounts %}
+            {% for account in available_accounts %}
         <tr>
             <td>{{account.company}}</td>
             <td>{{account.bank}}</td>

@@ -131,56 +131,86 @@ def user_delete(request, user_id, *args, **kwargs):
     return render(request, 'user_delete.html', {'user': user})
 
 
-class UserAddAccount(View):
+# class UserAddAccount(View):
+#
+#     def get(self, request, user_id, *args, **kwargs):
+#
+#         user = User.objects.get(pk=user_id)
+#         accounts = Account.objects.all()
+#         for account in accounts:
+#             if user.is_payment_creator == 'on':
+#                 is_payment_creator = True
+#             else:
+#                 is_payment_creator = False
+#             if user.is_payment_approver == 'on':
+#                 is_payment_approver = True
+#             else:
+#                 is_payment_approver = False
+#             if user.can_delete_payment == 'on':
+#                 can_delete = True
+#             else:
+#                 can_delete = False
+#
+#             return render(request, 'user_add_accounts.html', {'accounts': accounts,
+#                                                               'user': user,
+#                                                               'can_create': is_payment_creator,
+#                                                               'can_approve': is_payment_approver,
+#                                                               'can_delete': can_delete})
+#
+#     def post(self, request, user_id, *args, **kwargs):
+#         user = User.objects.get(pk=user_id)
+#         accounts = Account.objects.all()
+#         for account in accounts:
+#             is_payment_approver = request.POST.get('can_approve')
+#             if is_payment_approver == "on":
+#                 is_payment_approver = True
+#             else:
+#                 is_payment_approver = False
+#             is_payment_creator = request.POST.get('can_create')
+#             if is_payment_creator == "on":
+#                 is_payment_creator = True
+#             else:
+#                 is_payment_creator = False
+#             can_delete_payment = request.POST.get('can_delete')
+#             if can_delete_payment == "on":
+#                 can_delete_payment = True
+#             else:
+#                 can_delete_payment = False
+#             if is_payment_creator is True and is_payment_approver is True:
+#                 message = 'Violation of segregation of duties. User cannot create and approve payments.'
+#                 return render(request, 'user_add_account.html', {'user': user, 'message': message})
+#             account.user.is_payment_creator = is_payment_creator
+#             account.user.is_payment_approver = is_payment_approver
+#             account.user.can_delete_payment = can_delete_payment
+#             account.save()
+#             return redirect(f'/Users/user_view/{user_id}')
+
+class UserAddAccountsView(View):
+    """
+    View for adding new accounts to which the user can have access. Only accounts that user does not have access to yet
+    are enlisted in this view.
+    """
 
     def get(self, request, user_id, *args, **kwargs):
-
+        # admin = request.session.get('admin_id')
+        # if admin is None:
+        #     return HttpResponse('You are not authorized')
+        # else:
+        #     pass
         user = User.objects.get(pk=user_id)
         accounts = Account.objects.all()
+        user_accounts = user.account_set.all()
+        available_accounts = []
         for account in accounts:
-            if user.is_payment_creator == 'on':
-                is_payment_creator = True
-            else:
-                is_payment_creator = False
-            if user.is_payment_approver == 'on':
-                is_payment_approver = True
-            else:
-                is_payment_approver = False
-            if user.can_delete_payment == 'on':
-                can_delete = True
-            else:
-                can_delete = False
-
-            return render(request, 'user_add_accounts.html', {'accounts': accounts,
-                                                              'user': user,
-                                                              'can_create': is_payment_creator,
-                                                              'can_approve': is_payment_approver,
-                                                              'can_delete': can_delete})
+            if account not in user_accounts:
+                available_accounts.append(account)
+        return render(request, 'user_add_accounts.html', {'user': user, 'available_accounts': available_accounts})
 
     def post(self, request, user_id, *args, **kwargs):
         user = User.objects.get(pk=user_id)
-        last_name = request.POST.get('last_name')
-        is_payment_approver = request.POST.get('can_approve')
-        if is_payment_approver == "on":
-            is_payment_approver = True
-        else:
-            is_payment_approver = False
-        is_payment_creator = request.POST.get('can_create')
-        if is_payment_creator == "on":
-            is_payment_creator = True
-        else:
-            is_payment_creator = False
-        can_delete_payment = request.POST.get('can_delete')
-        if can_delete_payment == "on":
-            can_delete_payment = True
-        else:
-            can_delete_payment = False
-        if is_payment_creator is True and is_payment_approver is True:
-            message = 'Violation of segregation of duties. User cannot create and approve payments.'
-            return render(request, 'user_edit.html', {'user': user, 'message': message})
-        user.last_name = last_name
-        user.is_payment_creator = is_payment_creator
-        user.is_payment_approver = is_payment_approver
-        user.can_delete_payment = can_delete_payment
+        accounts = request.POST.getlist('accounts')
+        for account in accounts:
+            user_account = Account.objects.get(iban_number=account)
+            user.account.add(user_account)
         user.save()
-        return redirect(f'/Users/user_view/{user_id}')
+        return redirect(f'/user_view/{user_id}/')
