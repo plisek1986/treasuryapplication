@@ -15,14 +15,23 @@
     <label for="email">Email:</label>
     <input type="email" id="email" name="email">
     </br>
-    <label for="can_approve">Payment approver:</label>
-    <input type="checkbox" id="can_approve" name="can_approve">
-    </br>
-    <label for="can_create">Payment creator:</label>
-    <input type="checkbox" id="can_create" name="can_create">
-    </br>
-    <label for="can_delete">Can delete payment:</label>
-    <input type="checkbox" id="can_delete" name="can_delete">
+    <label for="department">Department</label>
+    <select id="department" name="department">
+        <option value="treasury">Treasury</option>
+        <option value="finance_AR">Finance AR</option>
+        <option value="finance_AP">Finance AP</option>
+        <option value="finance_GL">Finance GL</option>
+        <option value="fp&a">FP&A</option>
+        <option value="procurement">Procurement</option>
+    </select>
+{#    <label for="can_approve">Payment approver:</label>#}
+{#    <input type="checkbox" id="can_approve" name="can_approve">#}
+{#    </br>#}
+{#    <label for="can_create">Payment creator:</label>#}
+{#    <input type="checkbox" id="can_create" name="can_create">#}
+{#    </br>#}
+{#    <label for="can_delete">Can delete payment:</label>#}
+{#    <input type="checkbox" id="can_delete" name="can_delete">#}
     </br>
     <button type="submit">Save the user</button>
 </form>

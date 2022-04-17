@@ -58,7 +58,6 @@ class AccountCreateView(View):
     def get(self, request, *args, **kwargs):
         banks = Bank.objects.all()
         companies = Company.objects.all()
-        print(companies)
         country_codes = []
         for country in COUNTRY_CHOICE:
             country_codes.append(country[1])
