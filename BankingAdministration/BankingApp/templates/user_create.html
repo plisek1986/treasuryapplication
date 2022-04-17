@@ -17,13 +17,11 @@
     </br>
     <label for="department">Department</label>
     <select id="department" name="department">
-        <option value="treasury">Treasury</option>
-        <option value="finance_AR">Finance AR</option>
-        <option value="finance_AP">Finance AP</option>
-        <option value="finance_GL">Finance GL</option>
-        <option value="fp&a">FP&A</option>
-        <option value="procurement">Procurement</option>
+        {% for department in departments %}
+        <option value="{{ department }}">{{ department }}</option>
+        {% endfor %}
     </select>
+
 {#    <label for="can_approve">Payment approver:</label>#}
 {#    <input type="checkbox" id="can_approve" name="can_approve">#}
 {#    </br>#}

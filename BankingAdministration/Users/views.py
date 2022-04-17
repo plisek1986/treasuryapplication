@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import User
+from .models import User, DEPARTMENT_CHOICE
 from django.views.generic import ListView
 from django.views import View
 from Accounts.models import Account
@@ -17,41 +17,50 @@ class UserCreateView(View):
 
     def get(self, request, *args, **kwargs):
 
-        return render(request, 'user_create.html')
+        departments = []
+        for department in DEPARTMENT_CHOICE:
+            departments.append(department[1])
+        return render(request, 'user_create.html', {'departments': departments})
 
     def post(self, request, *args, **kwargs):
 
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
+        department = request.POST.get('department')
+        departments = []
+        for department in DEPARTMENT_CHOICE:
+            departments.append(department[1])
         username = request.POST.get('username')
         if len(username) < 7:
             message = 'Provided username is too short. Is should consist of 7 characters.'
-            return render(request, 'user_create.html', {'message': message})
+            return render(request, 'user_create.html', {'message': message, 'departments': departments})
         elif User.objects.filter(username=username):
             message = 'Provided username already exists in the database'
-            return render(request, 'user_create.html', {'message': message})
-        payment_creator = request.POST.get('can_create')
-        if payment_creator == "on":
-            payment_creator = True
-        else:
-            payment_creator = False
-        payment_approver = request.POST.get('can_approve')
-        if payment_approver == "on":
-            payment_approver = True
-        else:
-            payment_approver = False
-        delete_payment = request.POST.get('can_delete')
-        if delete_payment == "on":
-            delete_payment = True
-        else:
-            delete_payment = False
-        if payment_creator is True and payment_approver is True:
-            message = 'Violation of segregation of duties. User cannot create and approve payments.'
-            return render(request, 'user_create.html', {'message': message})
+            return render(request, 'user_create.html', {'message': message, 'departments': departments})
+        # payment_creator = request.POST.get('can_create')
+        # if payment_creator == "on":
+        #     payment_creator = True
+        # else:
+        #     payment_creator = False
+        # payment_approver = request.POST.get('can_approve')
+        # if payment_approver == "on":
+        #     payment_approver = True
+        # else:
+        #     payment_approver = False
+        # delete_payment = request.POST.get('can_delete')
+        # if delete_payment == "on":
+        #     delete_payment = True
+        # else:
+        #     delete_payment = False
+        # if payment_creator is True and payment_approver is True:
+        #     message = 'Violation of segregation of duties. User cannot create and approve payments.'
+        #     return render(request, 'user_create.html', {'message': message})
+        # department = request.POST.get('department')
         User.objects.create(first_name=first_name, last_name=last_name, email=email, username=username,
-                            is_payment_creator=payment_creator,
-                            is_payment_approver=payment_approver, can_delete_payment=delete_payment)
+                            department=department)
+                            # is_payment_creator=payment_creator,
+                            # is_payment_approver=payment_approver, can_delete_payment=delete_payment)
         return redirect('/Users/user_list/')
 
 
