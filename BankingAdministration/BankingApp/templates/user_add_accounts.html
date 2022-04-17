@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<p><a href="{% url 'Users:user-view' user_id=user.id %}">Go back</a></p>
+<p><a href="{% url 'Users:user-list' %}">Go back</a></p>
 <form action="" method="POST">
     {% csrf_token %}
 <p>{{ message }}</p>
@@ -24,11 +24,9 @@
             <td>{{account.bank}}</td>
             <td>{{account.iban_number}}</td>
             <td>{{account.swift_code}}</td>
-            <td><input type="checkbox" name="can_create" {% if user.is_payment_creator %} checked {% endif %}></td>
-            <td><input type="checkbox" name="can_approve" {% if user.is_payment_approver %} checked {% endif %}></td>
-            <td><input type="checkbox" name="can_delete" {% if user.can_delete_payment %} checked {% endif %}></td>
-
-
+            <td><input type="checkbox" name="can_create"></td>
+            <td><input type="checkbox" name="can_approve"></td>
+            <td><input type="checkbox" name="can_delete"></td>
         </tr>
             {% endfor %}
     </tbody>

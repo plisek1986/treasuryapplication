@@ -15,17 +15,21 @@
     <label for="email">Email:</label>
     <input type="email" name='email' id='email' placeholder='Email' value="{{user.email}}">
     <br>
-    <label for="can_approve">Payment approver</label>
-        <input type="checkbox" name='can_approve' id="can_approve"
-               {% if user.is_payment_approver %} checked {% endif %}>
-    <br>
-    <label for="can_create">Payment creator</label>
-        <input type="checkbox" name='can_create' id="can_create"
-               {% if user.is_payment_creator %} checked {% endif %}>
-    <br>
-    <label for="can_delete">Can delete payment</label>
-        <input type="checkbox" name='can_delete' id="can_delete"
-               {% if user.can_delete_payment %} checked {% endif %}>
+    <label for="department">Department:</label>
+    <select id="department" name="department">
+        <option value="{{ user.department }}" selected>{{ user.department }}</option>
+        {% for department in departments %}
+        <option value="{{ department }}">{{ department }}</option>
+        {% endfor %}
+    </select>
+{#    <br>#}
+{#    <label for="can_create">Payment creator</label>#}
+{#        <input type="checkbox" name='can_create' id="can_create"#}
+{#               {% if user.is_payment_creator %} checked {% endif %}>#}
+{#    <br>#}
+{#    <label for="can_delete">Can delete payment</label>#}
+{#        <input type="checkbox" name='can_delete' id="can_delete"#}
+{#               {% if user.can_delete_payment %} checked {% endif %}>#}
     <br>
     {{message}}<br>
     <button type="submit">Save</button>

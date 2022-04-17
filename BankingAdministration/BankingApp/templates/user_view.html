@@ -10,20 +10,21 @@
     <p><strong>Surname:</strong> {{last_name}}</p>
     <p><strong>Email:</strong> {{email}}</p>
     <p><strong>Username:</strong> {{username}}</p>
-    <h3><strong>Access:</strong></h3>
-    <div class="table">
-    <label for="can_approve">Payment approver:</label>
-        <input type="checkbox" name='can_approve' id="can_approve"
-               {% if not is_payment_approver %} disabled {% else %} disabled checked {% endif %}>
-    <br>
-    <label for="can_create">Payment creator:</label>
-        <input type="checkbox" name='can_create' id="can_create"
-               {% if not is_payment_creator %} disabled {% else %} disabled checked {% endif %}>
-    <br>
-    <label for="can_delete">Can delete payment:</label>
-        <input type="checkbox" name='can_delete' id="can_delete"
-               {% if not can_delete_payment %} disabled {% else %} checked disabled {% endif %}>
-    </div>
+    <p><strong>Department:</strong> {{department}}</p>
+{#    <h3><strong>Access:</strong></h3>#}
+{#    <div class="table">#}
+{#    <label for="can_approve">Payment approver:</label>#}
+{#        <input type="checkbox" name='can_approve' id="can_approve"#}
+{#               {% if not is_payment_approver %} disabled {% else %} disabled checked {% endif %}>#}
+{#    <br>#}
+{#    <label for="can_create">Payment creator:</label>#}
+{#        <input type="checkbox" name='can_create' id="can_create"#}
+{#               {% if not is_payment_creator %} disabled {% else %} disabled checked {% endif %}>#}
+{#    <br>#}
+{#    <label for="can_delete">Can delete payment:</label>#}
+{#        <input type="checkbox" name='can_delete' id="can_delete"#}
+{#               {% if not can_delete_payment %} disabled {% else %} checked disabled {% endif %}>#}
+{#    </div>#}
     <br>
     <h3><strong>Accounts:</strong></h3>
     <div class="table">

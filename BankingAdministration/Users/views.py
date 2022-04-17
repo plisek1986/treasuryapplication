@@ -7,7 +7,6 @@ from Accounts.models import Account
 
 # Create your views here.
 class UserListView(ListView):
-
     model = User
     template_name = 'user_list.html'
 
@@ -59,8 +58,8 @@ class UserCreateView(View):
         # department = request.POST.get('department')
         User.objects.create(first_name=first_name, last_name=last_name, email=email, username=username,
                             department=department)
-                            # is_payment_creator=payment_creator,
-                            # is_payment_approver=payment_approver, can_delete_payment=delete_payment)
+        # is_payment_creator=payment_creator,
+        # is_payment_approver=payment_approver, can_delete_payment=delete_payment)
         return redirect('/Users/user_list/')
 
 
@@ -68,16 +67,16 @@ class UserView(View):
     """View displays all details of the user including accounts to which user has access."""
 
     def get(self, request, user_id, *args, **kwargs):
-
         user = User.objects.get(pk=user_id)
         # accounts = user.account.all()
         ctx = {'first_name': user.first_name,
                'last_name': user.last_name,
                'username': user.username,
                'email': user.email,
-               'is_payment_creator': user.is_payment_creator,
-               'is_payment_approver': user.is_payment_approver,
-               'can_delete_payment': user.can_delete_payment,
+               'department': user.department,
+               # 'is_payment_creator': user.is_payment_creator,
+               # 'is_payment_approver': user.is_payment_approver,
+               # 'can_delete_payment': user.can_delete_payment,
                # 'accounts': accounts,
                }
         return render(request, 'user_view.html', ctx)
@@ -93,37 +92,45 @@ class UserEditView(View):
 
         user = User.objects.get(pk=user_id)
         # accounts = Account.objects.all()
-        return render(request, 'user_edit.html', {'user': user})
+        departments = []
+        for department in DEPARTMENT_CHOICE:
+            if user.department == department[1]:
+                pass
+            else:
+                departments.append(department[1])
+        return render(request, 'user_edit.html', {'user': user, 'departments': departments})
         # 'accounts': accounts --> to też ma pójść do ctx
 
     def post(self, request, user_id, *args, **kwargs):
 
         user = User.objects.get(pk=user_id)
         last_name = request.POST.get('last_name')
-        is_payment_approver = request.POST.get('can_approve')
-        if is_payment_approver == "on":
-            is_payment_approver = True
-        else:
-            is_payment_approver = False
-        is_payment_creator = request.POST.get('can_create')
-        if is_payment_creator == "on":
-            is_payment_creator = True
-        else:
-            is_payment_creator = False
-        can_delete_payment = request.POST.get('can_delete')
-        if can_delete_payment == "on":
-            can_delete_payment = True
-        else:
-            can_delete_payment = False
-        if is_payment_creator is True and is_payment_approver is True:
-            message = 'Violation of segregation of duties. User cannot create and approve payments.'
-            return render(request, 'user_edit.html', {'user': user, 'message': message})
+        department = request.POST.get('department')
+        # is_payment_approver = request.POST.get('can_approve')
+        # if is_payment_approver == "on":
+        #     is_payment_approver = True
+        # else:
+        #     is_payment_approver = False
+        # is_payment_creator = request.POST.get('can_create')
+        # if is_payment_creator == "on":
+        #     is_payment_creator = True
+        # else:
+        #     is_payment_creator = False
+        # can_delete_payment = request.POST.get('can_delete')
+        # if can_delete_payment == "on":
+        #     can_delete_payment = True
+        # else:
+        #     can_delete_payment = False
+        # if is_payment_creator is True and is_payment_approver is True:
+        #     message = 'Violation of segregation of duties. User cannot create and approve payments.'
+        #     return render(request, 'user_edit.html', {'user': user, 'message': message})
         user.last_name = last_name
-        user.is_payment_creator = is_payment_creator
-        user.is_payment_approver = is_payment_approver
-        user.can_delete_payment = can_delete_payment
+        user.department = department
+        # user.is_payment_creator = is_payment_creator
+        # user.is_payment_approver = is_payment_approver
+        # user.can_delete_payment = can_delete_payment
         user.save()
-        return redirect(f'/Users/user_view/{user_id}')
+        return redirect(f'/Users/user_list/')
 
 
 def user_delete(request, user_id, *args, **kwargs):
@@ -217,6 +224,36 @@ class UserAddAccountsView(View):
 
     def post(self, request, user_id, *args, **kwargs):
         user = User.objects.get(pk=user_id)
+        accounts = Account.objects.all()
+        user_accounts = user.account_set.all()
+        available_accounts = []
+        for account in accounts:
+            if account not in user_accounts:
+                available_accounts.append(account)
+        for account in available_accounts:
+            user.is_payment_approver = request.POST.get('can_approve')
+            if user.is_payment_approver == "on":
+                user.is_payment_approver = True
+            else:
+                user.is_payment_approver = False
+            user.is_payment_creator = request.POST.get('can_create')
+            if user.is_payment_creator == "on":
+                user.is_payment_creator = True
+            else:
+                user.is_payment_creator = False
+            user.can_delete_payment = request.POST.get('can_delete')
+            if user.can_delete_payment == "on":
+                user.can_delete_payment = True
+            else:
+                user.can_delete_payment = False
+            if user.is_payment_creator is True and user.is_payment_approver is True:
+                message = 'Violation of segregation of duties. User cannot create and approve payments.'
+                return render(request, 'user_add_account.html', {'user': user, 'message': message})
+            account.user.is_payment_creator = user.is_payment_creator
+            account.user.is_payment_approver = user.is_payment_approver
+            account.user.can_delete_payment = user.can_delete_payment
+            account.save()
+            return redirect(f'/Users/user_view/{user_id}')
         accounts = request.POST.getlist('accounts')
         for account in accounts:
             user_account = Account.objects.get(iban_number=account)
